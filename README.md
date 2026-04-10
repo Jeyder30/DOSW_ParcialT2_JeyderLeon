@@ -20,6 +20,7 @@
 
 
 
+
 # Punto 2
 
 Input: comprobaciones tecnicas sobre los datos que llegan. 
@@ -37,3 +38,8 @@ Autenticación: comprobar quién es el usuario
 Autorización: decidir qué puede hacer el usuario.
 
 Integridad: asegurar que los datos no fueron alterados.
+
+# Punto 4
+![Diagrama de componente general](docs/images/DiagramaComponeteGeneral.png)
+
+
