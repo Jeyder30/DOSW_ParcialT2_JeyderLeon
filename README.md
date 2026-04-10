@@ -17,3 +17,8 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+## Punto 15
+
+- Registrar: fecha/hora, request-id, endpoint/método, id de usuario (no sensible), mensaje de error, y metadatos útiles para reproducir el fallo.
+- No registrar: contraseñas, tokens, claves privadas, datos personales sensibles.
