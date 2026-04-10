@@ -17,3 +17,6 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+# punto 6
+![Diagrama de componentes especifico](docs/images/img.png)
