@@ -20,6 +20,8 @@
 
 
 
+
+
 # Punto 1
 
 1. Registro con correo institucional.
@@ -182,4 +184,20 @@ La búsqueda por QR es la operación más frecuente al escanear; este índice ev
 ## Índice compuesto para localizar el pedido activo por usuario
 
 Las comprobaciones “¿tiene el usuario un pedido activo?” y las consultas que filtran por usuario y estado (CREADO/EN_PREPARACION) serán muy rápidas porque el índice cubre el filtro; o hace ligeramente para devolver fecha sin ir a la fila completa. Esto reduce contencion  latencia en el flujo de creacion/validaciOn de pedidos, ademas tiene beneficio porque implementa mejora significativa en rutas críIticas del negocio.
-=======
+
+## Punto 11
+
+- Red (falla): Se escribe primero un test que describa el comportamiento deseado (por ejemplo “crea un pedido cuando hay stock”). Se ejecute la suite y vemos que falla porque aún no hay implementación.
+- Green (pasa): Se implementa la mínima lógica necesaria para que ese test pase (crear entidad Order, guardar ítems, devolver id). Ejecutamos y confirmamos que el test ahora pasa.
+- Refactor (mejora): Se limpia el código sin romper tests: Se extraen métodos, mejoras nombres, mueves validaciones a servicios. Volvemos a correr todos los tests para asegurarnos de que todo sigue verde.
+
+Casos de prueba: 
+
+exitoso: el usuario solicita un pedido y se valida en la pagina exitosamente
+
+fracaso: el pedido no es correcto por variaciones en stock o validaaciones del usuario
+
+
+Validaciones:
+
+todos los productos del pedido estan en stock, no hay problemas en cuanto al pedido
