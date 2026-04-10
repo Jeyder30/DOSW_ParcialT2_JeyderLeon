@@ -17,3 +17,11 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+# Punto 3
+
+Autenticación: comprobar quién es el usuario
+
+Autorización: decidir qué puede hacer el usuario.
+
+Integridad: asegurar que los datos no fueron alterados.
