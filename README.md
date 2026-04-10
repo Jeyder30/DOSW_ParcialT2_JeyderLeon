@@ -113,3 +113,28 @@ Entradas: estado objetivo (por ejemplo EN_PREPARACION). Salidas: pedido actualiz
 Validaciones: control de permisos por rol y restricciones en las transiciones de estado.
 
 codigos http: 200 (arroja el estado del pedido actualizado), 400 el rol no es permitido para la acción. el estado del pedido no se puede actualizar
+=======
+
+
+# Punto 2
+
+Input: comprobaciones tecnicas sobre los datos que llegan. 
+
+Ejemplos: campos obligatorios, formato de email, tipos, longitudes, nuumeros positivos. Se hacen en la entrada (controlador/DTO) y evitan errores básicos y ataques.
+
+Negocio: reglas propias del dominio que dependen del estado y la loggica de la app. 
+
+Ejemplos: stock suficiente antes de confirmar un pedido, un usuario solo puede tener un pedido activo, solo el personal puede marcar ENTREGADO. Se validan en la capa de servicio/domain y protegen la coherencia del negocio para que vaya acorde a lo establecido previamente.
+
+# Punto 3
+
+Autenticación: comprobar quién es el usuario
+
+Autorización: decidir qué puede hacer el usuario.
+
+Integridad: asegurar que los datos no fueron alterados.
+
+# Punto 4
+![Diagrama de componente general](docs/images/DiagramaComponeteGeneral.png)
+
+
