@@ -19,6 +19,11 @@
 - App local: http://localhost:8080
 
 
+## Punto 13
+
+Un pipeline CI/CD extrae el código, compila y corre pruebas unitarias, realiza análisis estático, empaqueta y ejecuta pruebas de integración, publica el artefacto y lo despliega para validar, y finalmente mueve lo revisado a producción. Su propósito es automatizar comprobaciones y despliegues para garantizar calidad y minimizar riesgos al llevar cambios a producción.
+
+
 
 # Punto 1
 
@@ -204,4 +209,7 @@ todos los productos del pedido estan en stock, no hay problemas en cuanto al ped
 
 Las pruebas convierten las reglas de negocio en comprobaciones automáticas: unit tests validan la lógica, integration tests verifican efectos sobre datos (transacciones) y prueban el flujo completo; ejecutadas en CI detectan regresiones y preservan la integridad del sistema.
 
+## Punto 13
+
+Un pipeline CI/CD extrae el código, compila y corre pruebas unitarias, realiza analisis estático, empaqueta y ejecuta pruebas de integración, publica el artefacto y lo despliega para validar, y finalmente mueve lo revisado a produccion. El proposito es automatizar procesos para validar cosas de forma efectiva e individual
 
