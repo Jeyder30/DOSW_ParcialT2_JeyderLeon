@@ -21,16 +21,6 @@
 
 
 
-
-## Punto 13
-
-Un pipeline CI/CD extrae el código, compila y corre pruebas unitarias, realiza análisis estático, empaqueta y ejecuta pruebas de integración, publica el artefacto y lo despliega para validar, y finalmente mueve lo revisado a producción. Su propósito es automatizar comprobaciones y despliegues para garantizar calidad y minimizar riesgos al llevar cambios a producción.
-
-## Punto 14
-
-Si una prueba falla en el pipeline, no se debe permitir el despliegue automaticamente: el fallo indica que alguna regla o comportamiento esperado esta roto y permitir el despligue aumenta el riesgo de introducir errores en producción. Lo correcto es detener el pipeline, notificar al equipo: corregir el problema, revertir el cambio o crear un hotfix antes de volver a intentar. 
-
-
 # Punto 1
 
 1. Registro con correo institucional.
@@ -223,4 +213,8 @@ Un pipeline CI/CD extrae el código, compila y corre pruebas unitarias, realiza 
 ## Punto 14
 
 Si una prueba falla en el pipeline, no se debe permitir el despliegue automaticamente: el fallo indica que alguna regla o comportamiento esperado esta roto y permitir el despligue aumenta el riesgo de introducir errores en producción. Lo correcto es detener el pipeline, notificar al equipo: corregir el problema, revertir el cambio o crear un hotfix antes de volver a intentar. 
+
+# Punto 16
+https://www.figma.com/design/xsyiJo8TwuhXrn9wFixKg0/Sin-t%C3%ADtulo?node-id=2-749&t=qWH4GCt3OmzxBbOH-1
+
 
