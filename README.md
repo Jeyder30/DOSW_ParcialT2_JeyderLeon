@@ -19,6 +19,8 @@
 - App local: http://localhost:8080
 
 
+
+
 # Punto 1
 
 1. Registro con correo institucional.
@@ -144,6 +146,8 @@ Integridad: asegurar que los datos no fueron alterados.
 - Pérdida de reutilización: la lógica no sirve en otros contextos.
 - Riesgos operativos y de seguridad: validaciones dispersas y despliegues más complejos.
 
+# punto 6
+![Diagrama de componentes especifico](docs/images/img.png)
 
 ## Punto 7
 
@@ -222,4 +226,7 @@ Si una prueba falla en el pipeline, no se debe permitir el despliegue automatica
 https://www.figma.com/design/xsyiJo8TwuhXrn9wFixKg0/Sin-t%C3%ADtulo?node-id=2-749&t=qWH4GCt3OmzxBbOH-1
 
 
+# PUNTOS GANADOS
+NICOLAS PARRADO 3
+JEYDER LEON 3
 
