@@ -17,3 +17,8 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+## Punto 12
+
+Las pruebas convierten las reglas de negocio en comprobaciones automáticas: unit tests validan la lógica, integration tests verifican efectos sobre datos (transacciones) y prueban el flujo completo; ejecutadas en CI detectan regresiones y preservan la integridad del sistema.
+
