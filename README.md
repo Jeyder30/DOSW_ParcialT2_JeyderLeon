@@ -19,17 +19,6 @@
 - App local: http://localhost:8080
 
 
-## Punto 15
-
-- Registrar: fecha/hora, request-id, endpoint/método, id de usuario (no sensible), mensaje de error, y metadatos útiles para reproducir el fallo.
-- No registrar: contraseñas, tokens, claves privadas, datos personales sensibles.
-
-
-
-
-
-
-
 # Punto 1
 
 1. Registro con correo institucional.
@@ -225,5 +214,12 @@ Si una prueba falla en el pipeline, no se debe permitir el despliegue automatica
 
 ## Punto 15
 
-- Registrar: fecha/hora, request-id, endpoint/método, id de usuario (no sensible), mensaje de error, y metadatos útiles para reproducir el fallo.
+- Registrar: fecha/hora, request-id, endpoint/método, id de usuario (no sensible) y mensaje de error.
 - No registrar: contraseñas, tokens, claves privadas, datos personales sensibles.
+
+
+# Punto 16
+https://www.figma.com/design/xsyiJo8TwuhXrn9wFixKg0/Sin-t%C3%ADtulo?node-id=2-749&t=qWH4GCt3OmzxBbOH-1
+
+
+
