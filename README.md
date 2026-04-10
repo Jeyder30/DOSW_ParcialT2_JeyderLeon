@@ -17,3 +17,11 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+# Punto 5
+
+- Mantenimiento difícil: cambios pequeños rompen partes no relacionadas.
+- Pruebas complicadas: imposible aislar lógica para unit tests.
+- Acoplamiento alto: impide reemplazar o refactorizar componentes.
+- Pérdida de reutilización: la lógica no sirve en otros contextos.
+- Riesgos operativos y de seguridad: validaciones dispersas y despliegues más complejos.
