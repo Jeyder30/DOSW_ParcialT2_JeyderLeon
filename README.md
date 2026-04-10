@@ -20,8 +20,6 @@
 
 
 
-
-
 # Punto 1
 
 1. Registro con correo institucional.
@@ -201,3 +199,9 @@ fracaso: el pedido no es correcto por variaciones en stock o validaaciones del u
 Validaciones:
 
 todos los productos del pedido estan en stock, no hay problemas en cuanto al pedido
+
+## Punto 12
+
+Las pruebas convierten las reglas de negocio en comprobaciones automáticas: unit tests validan la lógica, integration tests verifican efectos sobre datos (transacciones) y prueban el flujo completo; ejecutadas en CI detectan regresiones y preservan la integridad del sistema.
+
+
