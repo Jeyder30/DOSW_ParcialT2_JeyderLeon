@@ -17,3 +17,6 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+# Punto 16
+https://www.figma.com/design/xsyiJo8TwuhXrn9wFixKg0/Sin-t%C3%ADtulo?node-id=2-749&t=qWH4GCt3OmzxBbOH-1
