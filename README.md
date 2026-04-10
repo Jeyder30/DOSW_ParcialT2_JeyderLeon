@@ -18,6 +18,8 @@
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
 
+
+
 # Punto 2
 
 Input: comprobaciones tecnicas sobre los datos que llegan. 
@@ -27,3 +29,11 @@ Ejemplos: campos obligatorios, formato de email, tipos, longitudes, nuumeros pos
 Negocio: reglas propias del dominio que dependen del estado y la loggica de la app. 
 
 Ejemplos: stock suficiente antes de confirmar un pedido, un usuario solo puede tener un pedido activo, solo el personal puede marcar ENTREGADO. Se validan en la capa de servicio/domain y protegen la coherencia del negocio para que vaya acorde a lo establecido previamente.
+
+# Punto 3
+
+Autenticación: comprobar quién es el usuario
+
+Autorización: decidir qué puede hacer el usuario.
+
+Integridad: asegurar que los datos no fueron alterados.
