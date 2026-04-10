@@ -17,3 +17,7 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+## Punto 13
+
+Un pipeline CI/CD extrae el código, compila y corre pruebas unitarias, realiza análisis estático, empaqueta y ejecuta pruebas de integración, publica el artefacto y lo despliega para validar, y finalmente mueve lo revisado a producción. Su propósito es automatizar comprobaciones y despliegues para garantizar calidad y minimizar riesgos al llevar cambios a producción.
