@@ -19,6 +19,7 @@
 - App local: http://localhost:8080
 
 
+
 # Punto 1
 
 1. Registro con correo institucional.
@@ -171,3 +172,14 @@ Servicio
 - Dónde se usa: desde controladores o jobs; actúa como capa intermedia entre entrada y persistencia.
 - Ejemplo: crear un pedido verificar stock, reservar ítems, guardar el pedido y emitir evento.
 - Prueba: tests unitarios sobre la lógica mockeando repositorios y pruebas de integración para efectos secundarios.
+
+# Punto 10
+
+## Indice único sobre el código QR de productos
+
+La búsqueda por QR es la operación más frecuente al escanear; este índice evita escaneos totales de tabla y devuelve el producto en O(log n). Al ser unico también garantiza integridad del identificador QR, aparte es bueno para la lectura
+
+## Índice compuesto para localizar el pedido activo por usuario
+
+Las comprobaciones “¿tiene el usuario un pedido activo?” y las consultas que filtran por usuario y estado (CREADO/EN_PREPARACION) serán muy rápidas porque el índice cubre el filtro; o hace ligeramente para devolver fecha sin ir a la fila completa. Esto reduce contencion  latencia en el flujo de creacion/validaciOn de pedidos, ademas tiene beneficio porque implementa mejora significativa en rutas críIticas del negocio.
+=======
