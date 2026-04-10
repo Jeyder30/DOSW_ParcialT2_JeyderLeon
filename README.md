@@ -17,3 +17,8 @@
 - SonarQube UI: http://localhost:9000
 - Levantar la app Spring Boot: mvn spring-boot:run
 - App local: http://localhost:8080
+
+
+## Punto 14
+
+Si una prueba falla en el pipeline, no se debe permitir el despliegue automáticamente: el fallo indica que alguna regla o comportamiento esperado está roto y permitir el despligue aumenta el riesgo de introducir errores en producción. Lo correcto es detener el pipeline, notificar al equipo: corregir el problema, revertir el cambio o crear un hotfix antes de volver a intentar. 
