@@ -450,13 +450,48 @@ PATCH /api/pedidos/ped_001
 
 # Punto 2
 
-Input: comprobaciones tecnicas sobre los datos que llegan. 
+# diferencia entre validaciones de input y de negocio
 
-Ejemplos: campos obligatorios, formato de email, tipos, longitudes, nuumeros positivos. Se hacen en la entrada (controlador/DTO) y evitan errores básicos y ataques.
+## validaciones de input
 
-Negocio: reglas propias del dominio que dependen del estado y la loggica de la app. 
+comprueban que los datos recibidos tienen el formato correcto, sin importar la logica de la aplicacion.
 
-Ejemplos: stock suficiente antes de confirmar un pedido, un usuario solo puede tener un pedido activo, solo el personal puede marcar ENTREGADO. Se validan en la capa de servicio/domain y protegen la coherencia del negocio para que vaya acorde a lo establecido previamente.
+- campos obligatorios presentes
+- formato de correo valido
+- tipos de datos correctos
+- longitudes y rangos permitidos
+
+**donde:** controlador / DTO  
+**para que:** evitar errores basicos antes de procesar cualquier cosa
+
+
+## validaciones de negocio
+
+comprueban que la operacion tiene sentido segun las reglas del sistema.
+
+- hay stock suficiente para el pedido
+- el usuario no tiene otro pedido activo
+- el correo pertenece al dominio institucional
+- solo el personal puede marcar un pedido como entregado
+
+**donde:** capa de servicio / dominio  
+**para que:** proteger la coherencia del negocio
+
+
+## diferencias clave
+
+| aspecto | input | negocio |
+|---|---|---|
+| momento | al recibir la peticion | durante el procesamiento |
+| capa | controlador/DTO | servicio/dominio |
+| depende de | solo los datos enviados | estado del sistema y BD |
+| ejemplo | correo con formato valido | correo no registrado aun |
+
+
+## ejemplo en ECIXPRESS: crear pedido
+
+**input:** lista no vacia, IDs presentes, cantidades positivas  
+**negocio:** productos existen, hay stock, el usuario no tiene pedido activo
 
 # Punto 3
 
