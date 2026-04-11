@@ -519,30 +519,47 @@ Integridad: asegurar que los datos no fueron alterados.
 
 ## Punto 7
 
-Validador
+# Diferencias entre Validador, Utilidad y Servicio
 
-- Qué es: componente que verifica que los datos cumplen reglas concretas (formatos, rangos, campos obligatorios).
-- Responsabilidad: validar entrada y devolver errores claros; no realiza lógica de negocio ni efectos secundarios.
-- Dónde se usa: capas de entrada controladores, DTOs o antes de ejecutar una operación de negocio.
-- Ejemplo: comprobar que un email tenga formato válido o que una cantidad sea positiva.
-- Prueba: tests unitarios centrados en reglas de validación.
+## Validador
 
+**que es:** componente que verifica que los datos cumplen reglas concretas como formatos, rangos o campos obligatorios.
 
-Utilidad (helper)
+**responsabilidad:** validar entrada y devolver errores claros. no realiza logica de negocio ni efectos secundarios.
 
-- Qué es: función o clase pequeña que aporta una operación reutilizable y técnica, sin estado ni contexto de dominio.
-- Responsabilidad: resolver tareas auxiliares formatos, conversiones, cálculos sencillos de forma pura y reutilizable.
-- Dónde se usa: en cualquier capa que necesite la operación; no debería contener lógica de negocio.
-- Ejemplo: formatear una fecha, calcular el hash de un string, convertir moneda.
-- Prueba: tests unitarios que verifiquen entradas/ salidas para casos representativos.
+**donde se usa:** capas de entrada como controladores, DTOs o antes de ejecutar una operacion de negocio.
 
-Servicio
+**ejemplo:** comprobar que un email tenga formato valido o que una cantidad sea positiva.
 
-- Qué es: componente que encapsula la lógica de negocio, coordina validadores, utilidades y repositorios.
-- Responsabilidad: implementar las reglas del dominio, gestionar transacciones y efectos secundarios persistencia, envío de eventos.
-- Dónde se usa: desde controladores o jobs; actúa como capa intermedia entre entrada y persistencia.
-- Ejemplo: crear un pedido verificar stock, reservar ítems, guardar el pedido y emitir evento.
-- Prueba: tests unitarios sobre la lógica mockeando repositorios y pruebas de integración para efectos secundarios.
+**prueba:** tests unitarios centrados en reglas de validacion.
+
+---
+
+## Utilidad (helper)
+
+**que es:** funcion o clase pequeña que aporta una operacion reutilizable y tecnica, sin estado ni contexto de dominio.
+
+**responsabilidad:** resolver tareas auxiliares como formatos, conversiones o calculos sencillos de forma pura y reutilizable.
+
+**donde se usa:** en cualquier capa que necesite la operacion. no deberia contener logica de negocio.
+
+**ejemplo:** formatear una fecha, calcular el hash de un string, convertir moneda.
+
+**prueba:** tests unitarios que verifiquen entradas y salidas para casos representativos.
+
+---
+
+## Servicio
+
+**que es:** componente que encapsula la logica de negocio, coordina validadores, utilidades y repositorios.
+
+**responsabilidad:** implementar las reglas del dominio, gestionar transacciones y efectos secundarios como persistencia o envio de eventos.
+
+**donde se usa:** desde controladores o jobs. actua como capa intermedia entre entrada y persistencia.
+
+**ejemplo:** crear un pedido verificando stock, reservar items, guardar el pedido y emitir evento.
+
+**prueba:** tests unitarios sobre la logica mockeando repositorios y pruebas de integracion para efectos secundarios.
 
 # Punto 8
 ![Diagrama de clases](docs/images/DiagramaDeClases.png)
