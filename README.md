@@ -23,98 +23,429 @@
 
 # Punto 1
 
-1. Registro con correo institucional.
-Verbo: POST
+# analisis de funcionalidades - ECIXPRESS
 
-Descripción: cualquier persona con correo institucional puede registrarse proporcionando nombre, correo y contraseña. El sistema crea la cuenta y devuelve la información básica del usuario.
+## 1. registro con correo institucional
 
-idempotencia= No es una operación idempotente: intentar crear el mismo usuario dos veces dará lugar a un conflicto.
+**verbo HTTP:** POST
 
-Entradas: nombre, correo institucional, contraseña (todos obligatorios). Salidas: identificador del usuario, nombre, correo y rol.
+**descripcion:** cualquier persona con correo institucional puede registrarse proporcionando nombre, correo y contrasena. el sistema crea la cuenta y devuelve la informacion basica del usuario.
 
-Validaciones : el correo debe pertenecer al dominio institucional, el correo debe ser único y la contraseña debe cumplir requisitos mínimos de seguridad.
+**idempotencia:** no es una operacion idempotente: intentar crear el mismo usuario dos veces dara lugar a un conflicto.
 
-codigos http: 200 creado correctamente, 400 error por datos inválidos o conflicto si el correo ya existe.
+**razon tecnica:** POST crea un nuevo recurso cada vez que se invoca.
 
-2. Inicio de sesión.
-Verbo: POST
+**roles con acceso:** publico (sin autenticacion)
 
-Descripción: permite a un usuario autenticarse con correo y contraseña. Si las credenciales son válidas se devuelve un token de acceso y la información del usuario.
+**datos de entrada:**
+- nombre: string (obligatorio)
+- correo: string (obligatorio)
+- contrasena: string (obligatorio)
 
-idempotencia: No es idempotente en el sentido práctico porque genera credenciales de sesión.
+**datos de salida:**
+- id: string
+- nombre: string
+- correo: string
+- rol: string
 
-Entradas: correo y contraseña (son obligatorios ambos) . Salidas: token de acceso y datos del usuario.
+**ejemplo de entrada:**
+```json
+{
+  "nombre": "Juan Perez",
+  "correo": "juan.perez@universidad.edu.co",
+  "contrasena": "Pass123!"
+}
+```
 
-Validaciones: campos obligatorios y credenciales correctas. Respuestas: token en caso de éxito o error de credenciales.
+**ejemplo de salida:**
+```json
+{
+  "id": "usr_123",
+  "nombre": "Juan Perez",
+  "correo": "juan.perez@universidad.edu.co",
+  "rol": "cliente"
+}
+```
 
-codigos http: 200 inicio de sesion exitoso, 400 no se evidencia el token, credenciales incorrectas
+**validaciones de input:**
+- nombre no vacio
+- correo formato valido
+- contrasena no vacia
 
-3. Consultar producto mediante código QR.
-   
-Verbo: GET
+**validaciones de negocio:**
+- el correo debe pertenecer al dominio institucional
+- el correo debe ser unico en la base de datos
+- la contrasena debe cumplir requisitos minimos de seguridad (minimo 8 caracteres, mayuscula, numero)
 
-Descripción: al escanear un QR se obtiene la ficha del producto: nombre, descripción, precio, código QR, stock y estado (disponible o no).
+**codigos HTTP:**
+- **caso exitoso:** 201 Created - "usuario creado correctamente"
+- **errores posibles:**
+  - 400 Bad Request: "datos invalidos"
+  - 409 Conflict: "el correo ya existe"
 
-idempotencia: Es una operación de solo lectura y por tanto idempotente, sie,pre devolvera el mismo producto para el mismo qr.
+---
 
-Entradas: código QR(muy obligatorio). Salidas: información completa del producto.
+## 2. inicio de sesion
 
-Validaciones: formato del QR y existencia del producto. Si no existe, se devuelve un error de no encontrado.
+**verbo HTTP:** POST
 
-codigos http: 200 (producto encontrado), 400 producto no encontrado, no hay autorización, el producto no se encontro
+**descripcion:** permite a un usuario autenticarse con correo y contrasena. si las credenciales son validas se devuelve un token de acceso y la informacion del usuario.
 
-4. Crear pedido con productos escaneados.
-Verbo: POST
+**idempotencia:** no es idempotente en el sentido practico porque genera credenciales de sesion (token) diferentes en cada llamada.
 
-Descripción: un usuario autenticado puede crear un pedido enviando la lista de productos (identificador o código QR) y las cantidades. El pedido se guarda con estado inicial CREADO y se devuelve su identificador, total y fecha. 
+**razon tecnica:** POST genera un nuevo token de sesion en cada invocacion.
 
-idempotencia: No es idempotente, cada pedido tiene productos distintos.
+**roles con acceso:** publico (sin autenticacion)
 
-Entradas: lista de ítems con producto y cantidad(obligatorio). Salidas: identificador del pedido, estado inicial, total y fecha de creación.
+**datos de entrada:**
+- correo: string (obligatorio)
+- contrasena: string (obligatorio)
 
-Validaciones: que los productos existan, cantidades mayores a cero, stock suficiente y que el usuario no tenga ya un pedido activo.
+**datos de salida:**
+- token: string
+- usuario: object
 
-codigos http: 200 pedido creado exitosamente, 400 no hay productos requeridos,no hay suficiente sotck de el/los productos, tienes un pedido activo
+**ejemplo de entrada:**
+```json
+{
+  "correo": "juan.perez@universidad.edu.co",
+  "contrasena": "Pass123!"
+}
+```
 
-5. Validar stock antes de confirmar.
-Verbo: POST
+**ejemplo de salida:**
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+  "usuario": {
+    "id": "usr_123",
+    "nombre": "Juan Perez",
+    "rol": "cliente"
+  }
+}
+```
 
-Descripción: comprueba sin modificar nada si hay stock suficiente para las cantidades solicitadas.
+**validaciones de input:**
+- correo no vacio
+- contrasena no vacia
+- formato de correo valido
 
-idempotencia:Es idempotente porque solo consulta el estado del inventario.
+**validaciones de negocio:**
+- las credenciales deben ser correctas
+- el usuario debe existir en la base de datos
 
-Entradas: lista de ítems(obligatorio). Salidas: por cada producto la cantidad solicitada, la disponible y un indicador de si es suficiente.
+**codigos HTTP:**
+- **caso exitoso:** 200 OK - "inicio de sesion exitoso"
+- **errores posibles:**
+  - 400 Bad Request: "no se evidencia el token"
+  - 401 Unauthorized: "credenciales incorrectas"
 
-Validaciones: cantidades positivas y existencia de producto.
+---
 
-codigos http: 200 stock disponible, 400 el producto no existe
+## 3. consultar producto mediante codigo QR
 
-6. Un usuario solo puede tener un pedido activo.
+**verbo HTTP:** GET
 
-Verbo: GET 
+**descripcion:** al escanear un QR se obtiene la ficha del producto: nombre, descripcion, precio, codigo QR, stock y estado (disponible o no).
 
-Descripción: regla de negocio que impide a un usuario crear un nuevo pedido si ya tiene uno en estado activo (por ejemplo CREADO o EN_PREPARACION). GET devuelve el pedido activo si existe.
+**idempotencia:** es una operacion de solo lectura y por tanto idempotente, siempre devolvera el mismo producto para el mismo QR.
 
-idempotencia: como es una operación de solo lectura es idempotente
+**razon tecnica:** GET solo consulta informacion sin modificar el estado del servidor.
 
-Entradas: id del pedido. Salidas: estado del pedido
+**roles con acceso:** cliente, senora de la cafeteria
 
-Validaciones: usuario autenticado y comprobación del estado del pedido.
+**datos de entrada:**
+- codigoQR: string (obligatorio, en URL)
 
-codigos hhtp: 200 ( consulta del estado ). 400 hay ya un pedido en curso
+**datos de salida:**
+- id: string
+- nombre: string
+- descripcion: string
+- precio: number
+- codigoQR: string
+- stock: number
+- estado: string
 
-7. Gestión de estados del pedido.
-Verbo: PATCH
+**ejemplo de entrada:**
+```
+GET /api/productos/QR_CAFE_001
+```
 
-Descripción: el personal de la cafetería puede actualizar pedidos a EN_PREPARACION y luego a ENTREGADO. El cliente puede cancelar solo si el pedido está en CREADO. Al confirmar la entrega el sistema debe ajustar el stock.
+**ejemplo de salida:**
+```json
+{
+  "id": "prod_001",
+  "nombre": "Cafe Americano",
+  "descripcion": "cafe negro 250ml",
+  "precio": 2500,
+  "codigoQR": "QR_CAFE_001",
+  "inventario": 50,
+  "estado": "disponible"
+}
+```
 
-idempotencia: No es idempotente ya que busca actualizar algo
+**validaciones de input:**
+- codigo QR no vacio
+- formato del QR valido
 
-Entradas: estado objetivo (por ejemplo EN_PREPARACION). Salidas: pedido actualizado.
+**validaciones de negocio:**
+- el producto debe existir en la base de datos
 
-Validaciones: control de permisos por rol y restricciones en las transiciones de estado.
+**codigos HTTP:**
+- **caso exitoso:** 200 OK - "producto encontrado"
+- **errores posibles:**
+  - 400 Bad Request: "producto no encontrado"
+  - 401 Unauthorized: "no hay autorizacion"
+  - 404 Not Found: "el producto no se encontro"
 
-codigos http: 200 (arroja el estado del pedido actualizado), 400 el rol no es permitido para la acción. el estado del pedido no se puede actualizar
+---
+
+## 4. crear pedido con productos escaneados
+
+**verbo HTTP:** POST
+
+**descripcion:** un usuario autenticado puede crear un pedido enviando la lista de productos (identificador o codigo QR) y las cantidades. el pedido se guarda con estado inicial CREADO y se devuelve su identificador, total y fecha.
+
+**idempotencia:** no es idempotente, cada pedido tiene productos distintos y genera un nuevo recurso con identificador unico.
+
+**razon tecnica:** POST crea un nuevo recurso (pedido) cada vez.
+
+**roles con acceso:** cliente
+
+**datos de entrada:**
+- productos: array (obligatorio)
+  - productoId: string
+  - cantidad: number
+
+**datos de salida:**
+- id: string
+- usuarioId: string
+- productos: array
+- total: number
+- estado: string
+- fechaCreacion: string
+
+**ejemplo de entrada:**
+```json
+{
+  "productos": [
+    {"productoId": "prod_001", "cantidad": 2},
+    {"productoId": "prod_002", "cantidad": 1}
+  ]
+}
+```
+
+**ejemplo de salida:**
+```json
+{
+  "id": "ped_001",
+  "usuarioId": "usr_123",
+  "productos": [
+    {
+      "productoId": "prod_001",
+      "nombre": "Cafe",
+      "cantidad": 2,
+      "precio": 2500
+    }
+  ],
+  "total": 7500,
+  "estado": "CREADO",
+  "fechaCreacion": "2024-04-10T14:30:00Z"
+}
+```
+
+**validaciones de input:**
+- lista de items no vacia
+- cada item debe tener producto y cantidad
+- cantidades deben ser mayores a cero
+
+**validaciones de negocio:**
+- los productos deben existir en la base de datos
+- debe haber stock suficiente para cada producto
+- el usuario no debe tener ya un pedido activo
+
+**codigos HTTP:**
+- **caso exitoso:** 201 Created - "pedido creado exitosamente"
+- **errores posibles:**
+  - 400 Bad Request: "no hay productos requeridos"
+  - 400 Bad Request: "no hay suficiente stock de el/los productos"
+  - 409 Conflict: "tienes un pedido activo"
+
+---
+
+## 5. validar stock antes de confirmar
+
+**verbo HTTP:** POST
+
+**descripcion:** comprueba sin modificar nada si hay stock suficiente para las cantidades solicitadas.
+
+**idempotencia:** es idempotente porque solo consulta el estado del stock sin modificarlo. multiples llamadas con los mismos datos retornan el mismo resultado.
+
+**razon tecnica:** aunque usa POST, es una operacion de consulta que no modifica el estado.
+
+**roles con acceso:** cliente, senora de la cafeteria
+
+**datos de entrada:**
+- productos: array (obligatorio)
+  - productoId: string
+  - cantidad: number
+
+**datos de salida:**
+- validacion: array
+  - productoId: string
+  - cantidadSolicitada: number
+  - cantidadDisponible: number
+  - suficiente: boolean
+
+**ejemplo de entrada:**
+```json
+{
+  "productos": [
+    {"productoId": "prod_001", "cantidad": 2}
+  ]
+}
+```
+
+**ejemplo de salida:**
+```json
+{
+  "validacion": [
+    {
+      "productoId": "prod_001",
+      "cantidadSolicitada": 2,
+      "cantidadDisponible": 50,
+      "suficiente": true
+    }
+  ]
+}
+```
+
+**validaciones de input:**
+- lista de items no vacia
+- cantidades deben ser positivas
+
+**validaciones de negocio:**
+- los productos deben existir en la base de datos
+
+**codigos HTTP:**
+- **caso exitoso:** 200 OK - "stock disponible"
+- **errores posibles:**
+  - 400 Bad Request: "el producto no existe"
+  - 404 Not Found: "producto no encontrado"
+
+---
+
+## 6. un usuario solo puede tener un pedido activo
+
+**verbo HTTP:** GET
+
+**descripcion:** regla de negocio que impide a un usuario crear un nuevo pedido si ya tiene uno en estado activo (por ejemplo CREADO o EN_PREPARACION). GET devuelve el pedido activo si existe.
+
+**idempotencia:** como es una operacion de solo lectura es idempotente. consulta el estado sin modificar nada.
+
+**razon tecnica:** GET solo consulta informacion.
+
+**roles con acceso:** cliente
+
+**datos de entrada:**
+- usuarioId: string (en token/sesion)
+
+**datos de salida:**
+- pedidoActivo: object o null
+  - id: string
+  - estado: string
+  - fechaCreacion: string
+
+**ejemplo de entrada:**
+```
+GET /api/pedidos/activo
+```
+
+**ejemplo de salida:**
+```json
+{
+  "pedidoActivo": {
+    "id": "ped_001",
+    "estado": "CREADO",
+    "fechaCreacion": "2024-04-10T14:30:00Z"
+  }
+}
+```
+
+**validaciones de input:**
+- usuario autenticado
+
+**validaciones de negocio:**
+- verificar si existe pedido en estado CREADO o EN_PREPARACION para el usuario
+
+**codigos HTTP:**
+- **caso exitoso:** 200 OK - "consulta del estado exitosa"
+- **errores posibles:**
+  - 400 Bad Request: "hay ya un pedido en curso"
+  - 401 Unauthorized: "usuario no autenticado"
+
+---
+
+## 7. gestion de estados del pedido
+
+**verbo HTTP:** PATCH
+
+**descripcion:** el personal de la cafeteria puede actualizar pedidos a EN_PREPARACION y luego a ENTREGADO. el cliente puede cancelar solo si el pedido esta en CREADO. al confirmar la entrega el sistema debe ajustar el stock.
+
+**idempotencia:** no es idempotente ya que busca actualizar el estado del pedido. cada transicion de estado es unica y modifica el recurso.
+
+**razon tecnica:** PATCH modifica parcialmente el recurso y cada transicion de estado es significativa.
+
+**roles con acceso:** cliente (para cancelar), senora de la cafeteria (para cambiar a EN_PREPARACION/ENTREGADO)
+
+**datos de entrada:**
+- pedidoId: string (en URL)
+- estado: string (obligatorio)
+
+**datos de salida:**
+- id: string
+- estado: string
+- fechaActualizacion: string
+
+**ejemplo de entrada:**
+```
+PATCH /api/pedidos/ped_001
+```
+```json
+{
+  "estado": "EN_PREPARACION"
+}
+```
+
+**ejemplo de salida:**
+```json
+{
+  "id": "ped_001",
+  "estado": "EN_PREPARACION",
+  "fechaActualizacion": "2024-04-10T14:35:00Z"
+}
+```
+
+**validaciones de input:**
+- estado objetivo no vacio
+- estado debe ser valido (EN_PREPARACION, ENTREGADO, CANCELADO)
+
+**validaciones de negocio:**
+- control de permisos por rol
+- el cliente solo puede cancelar si esta en CREADO
+- la cafeteria puede cambiar a EN_PREPARACION y ENTREGADO
+- restricciones en transiciones de estado
+- al confirmar entrega ajustar stock
+
+**codigos HTTP:**
+- **caso exitoso:** 200 OK - "estado del pedido actualizado"
+- **errores posibles:**
+  - 400 Bad Request: "el estado del pedido no se puede actualizar"
+  - 403 Forbidden: "el rol no es permitido para la accion"
+
+---
+
+
 
 
 # Punto 2
