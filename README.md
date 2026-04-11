@@ -147,7 +147,9 @@ Integridad: asegurar que los datos no fueron alterados.
 - Riesgos operativos y de seguridad: validaciones dispersas y despliegues más complejos.
 
 # punto 6
-![Diagrama de componentes especifico](docs/images/img.png)
+![Diagrama de componentes especifico](docs/images/DiagramaComponentesEspecifico.png)
+
+- los controladores reciben las peticiones y llaman a los servicios. los servicios tienen la logica de negocio y usan repositorios para acceder a la base de datos. los validadores verifican reglas especificas y las utilidades son funciones auxiliares como generar tokens o hashear contraseñas.
 
 ## Punto 7
 
