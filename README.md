@@ -230,3 +230,5 @@ https://www.figma.com/design/xsyiJo8TwuhXrn9wFixKg0/Sin-t%C3%ADtulo?node-id=2-74
 NICOLAS PARRADO 3
 JEYDER LEON 3
 
+   
+ 
