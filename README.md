@@ -513,7 +513,7 @@ Integridad: asegurar que los datos no fueron alterados.
 - Riesgos operativos y de seguridad: validaciones dispersas y despliegues más complejos.
 
 # punto 6
-![Diagrama de componentes especifico](docs/images/DiagramaComponentesEspecifico.png)
+![Diagrama de componentes especifico](docs/images/DiagramaComponenteEspecifico.png)
 
 - los controladores reciben las peticiones y llaman a los servicios. los servicios tienen la logica de negocio y usan repositorios para acceder a la base de datos. los validadores verifican reglas especificas y las utilidades son funciones auxiliares como generar tokens o hashear contraseñas.
 
@@ -543,6 +543,17 @@ Servicio
 - Dónde se usa: desde controladores o jobs; actúa como capa intermedia entre entrada y persistencia.
 - Ejemplo: crear un pedido verificar stock, reservar ítems, guardar el pedido y emitir evento.
 - Prueba: tests unitarios sobre la lógica mockeando repositorios y pruebas de integración para efectos secundarios.
+
+# Punto 8
+![Diagrama de clases](docs/images/DiagramaDeClases.png)
+
+## patron state
+**se usaria el patron state para manejar los estados del pedido porque:**
+-	encapsula comportamiento por estado: cada estado (CREADO, EN_PREPARACION, ENTREGADO, CANCELADO) tiene comportamientos especificos. por ejemplo, solo en creado se puede cancelar.
+-	transiciones controladas: el patron permite definir que transiciones son validas. un pedido en ENTREGADO no puede volver a creado.
+-	facilita extension: si se agregan nuevos estados en el futuro, solo se crea una nueva clase sin modificar el codigo existente.
+-	elimina condicionales: en lugar de tener muchos if/else para verificar el estado actual, cada estado sabe que puede hacer.
+
 
 # Punto 10
 
