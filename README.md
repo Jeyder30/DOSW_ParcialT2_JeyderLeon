@@ -571,6 +571,16 @@ Integridad: asegurar que los datos no fueron alterados.
 -	facilita extension: si se agregan nuevos estados en el futuro, solo se crea una nueva clase sin modificar el codigo existente.
 -	elimina condicionales: en lugar de tener muchos if/else para verificar el estado actual, cada estado sabe que puede hacer.
 
+# Punto 9
+![Diagrama Entidad-Relacion](docs/images/Diagrama_Entidad_Relacion.png)
+
+# explicacion
+**el diagrama muestra las relaciones entre las entidades principales:**
+-	un usuario puede realizar muchos pedidos
+-	un pedido pertenece a un usuario y contiene varios ítems
+-	cada item del pedido referencia un producto y guarda la cantidad y precio al momento de la compra
+-	los productos tienen un codigo qr unico para ser escaneados
+
 
 # Punto 10
 
