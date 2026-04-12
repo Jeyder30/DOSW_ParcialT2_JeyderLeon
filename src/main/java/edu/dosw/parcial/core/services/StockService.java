@@ -21,23 +21,15 @@ public class StockService {
     private final StockValidator stockValidator;
 
     public Map<String, ProductoEntity> validarYObtenerProductos(List<ItemPedidoRequest> items) {
-        Map<String, ProductoEntity> productos = items.stream()
-                .map(item -> productoRepository.findById(item.getProductoId())
-                        .orElseThrow(() -> new ProductoNoEncontradoException(
-                                "El producto no existe: " + item.getProductoId())))
-                .collect(Collectors.toMap(ProductoEntity::getId, p -> p));
-
-        List<String> sinStock = items.stream()
-                .filter(item -> !stockValidator.haySuficienteStock(
-                        productos.get(item.getProductoId()), item.getCantidad()))
-                .map(ItemPedidoRequest::getProductoId)
-                .toList();
-
-        if (!sinStock.isEmpty()) {
-            throw new StockInsuficienteException("No hay suficiente stock de el/los productos: " + sinStock);
-        }
-
-        return productos;
+        return items.stream().collect(Collectors.toMap(
+                ItemPedidoRequest::getProductoId,
+                item -> {
+                    ProductoEntity producto = productoRepository.findById(item.getProductoId())
+                            .orElseThrow(() -> new ProductoNoEncontradoException("Producto no encontrado: " + item.getProductoId()));
+                    if (!stockValidator.haySuficienteStock(producto, item.getCantidad()))
+                        throw new StockInsuficienteException("Stock insuficiente para: " + item.getProductoId());
+                    return producto;
+                }
+        ));
     }
 }
-

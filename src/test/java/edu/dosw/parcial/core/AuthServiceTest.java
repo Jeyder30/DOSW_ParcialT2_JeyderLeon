@@ -8,6 +8,7 @@ import edu.dosw.parcial.persistence.entities.Rol;
 import edu.dosw.parcial.persistence.entities.UsuarioEntity;
 import edu.dosw.parcial.persistence.repositories.UsuarioRepository;
 import edu.dosw.parcial.utils.HashUtil;
+import edu.dosw.parcial.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -27,6 +28,8 @@ class AuthServiceTest {
     private UsuarioRepository usuarioRepository;
     @Mock
     private HashUtil hashUtil;
+    @Mock
+    private JwtUtil jwtUtil;
 
     @InjectMocks
     private AuthService authService;

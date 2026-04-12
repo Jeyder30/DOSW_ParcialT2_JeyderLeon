@@ -3,6 +3,7 @@ package edu.dosw.parcial.controller;
 import edu.dosw.parcial.controller.dtos.response.ProductoResponse;
 import edu.dosw.parcial.core.exceptions.ProductoNoEncontradoException;
 import edu.dosw.parcial.core.services.ProductoService;
+import edu.dosw.parcial.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -27,6 +28,9 @@ class ProductoControllerTest {
 
     @MockBean
     private ProductoService productoService;
+
+    @MockBean
+    private JwtUtil jwtUtil;
 
     @Test
     void consultarPorQR_exitoso_retorna_200() throws Exception {

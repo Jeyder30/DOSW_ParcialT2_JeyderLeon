@@ -5,6 +5,7 @@ import edu.dosw.parcial.controller.dtos.request.LoginRequest;
 import edu.dosw.parcial.controller.dtos.response.LoginResponse;
 import edu.dosw.parcial.core.exceptions.DatosInvalidosException;
 import edu.dosw.parcial.core.services.AuthService;
+import edu.dosw.parcial.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,6 +31,9 @@ class AuthControllerTest {
 
     @MockBean
     private AuthService authService;
+
+    @MockBean
+    private JwtUtil jwtUtil;
 
     private LoginRequest request() {
         LoginRequest r = new LoginRequest();

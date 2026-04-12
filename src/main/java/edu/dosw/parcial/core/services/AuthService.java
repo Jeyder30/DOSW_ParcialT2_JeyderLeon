@@ -6,6 +6,7 @@ import edu.dosw.parcial.core.exceptions.DatosInvalidosException;
 import edu.dosw.parcial.persistence.entities.UsuarioEntity;
 import edu.dosw.parcial.persistence.repositories.UsuarioRepository;
 import edu.dosw.parcial.utils.HashUtil;
+import edu.dosw.parcial.utils.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class AuthService {
 
     private final UsuarioRepository usuarioRepository;
     private final HashUtil hashUtil;
+    private final JwtUtil jwtUtil;
 
     public LoginResponse login(LoginRequest request) {
         UsuarioEntity usuario = usuarioRepository.findByCorreo(request.getCorreo())
@@ -24,7 +26,11 @@ public class AuthService {
             throw new DatosInvalidosException("Credenciales inválidas");
         }
 
+        String token = jwtUtil.generateToken(usuario.getId(), usuario.getCorreo(),
+                usuario.getRol().name());
+
         return LoginResponse.builder()
+                .token(token)
                 .id(usuario.getId())
                 .nombre(usuario.getNombre())
                 .rol(usuario.getRol().name().toLowerCase())
