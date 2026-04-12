@@ -594,33 +594,80 @@ Las comprobaciones “¿tiene el usuario un pedido activo?” y las consultas qu
 
 ## Punto 11
 
-- Red (falla): Se escribe primero un test que describa el comportamiento deseado (por ejemplo “crea un pedido cuando hay stock”). Se ejecute la suite y vemos que falla porque aún no hay implementación.
-- Green (pasa): Se implementa la mínima lógica necesaria para que ese test pase (crear entidad Order, guardar ítems, devolver id). Ejecutamos y confirmamos que el test ahora pasa.
-- Refactor (mejora): Se limpia el código sin romper tests: Se extraen métodos, mejoras nombres, mueves validaciones a servicios. Volvemos a correr todos los tests para asegurarnos de que todo sigue verde.
+# TDD para Funcionalidad "Solicitar Pedido" - ECIXPRESS
 
-Casos de prueba: 
+## Descripcion de las Fases de TDD
 
-exitoso: el usuario solicita un pedido y se valida en la pagina exitosamente
+**Red (falla):** se escribe primero un test que describa el comportamiento deseado por ejemplo "crea un pedido cuando hay stock". se ejecuta la suite y vemos que falla porque aun no hay implementacion.
 
-fracaso: el pedido no es correcto por variaciones en stock o validaaciones del usuario
+**Green (pasa):** se implementa la minima logica necesaria para que ese test pase crear entidad pedido, guardar items, devolver id. ejecutamos y confirmamos que el test ahora pasa.
 
+**Refactor (mejora):** se limpia el codigo sin romper tests. se extraen metodos, mejoran nombres, mueven validaciones a servicios. volvemos a correr todos los tests para asegurarnos de que todo sigue verde.
 
-Validaciones:
+---
 
-todos los productos del pedido estan en stock, no hay problemas en cuanto al pedido
+## Casos de Prueba Iniciales
+
+### Escenarios Exitosos
+- el usuario solicita un pedido y se valida en la pagina exitosamente
+- todos los productos tienen stock disponible
+- el pedido se crea con estado CREADO
+- el total se calcula correctamente
+
+### Escenarios de Fracaso
+- el pedido no es correcto por variaciones en stock
+- el pedido no es correcto por validaciones del usuario como tener un pedido activo
+- productos inexistentes
+- cantidades invalidas
+
+---
+
+## Validaciones Clave
+
+**Validaciones cubiertas por las pruebas:**
+- todos los productos del pedido estan en stock
+- no hay problemas en cuanto al pedido
+- el usuario no tiene otro pedido activo
+- los productos existen en la base de datos
+- las cantidades son validas y positivas
+- el usuario esta autenticado
+
+---
+
+## Como las Pruebas Garantizan Cumplimiento
+
+**Reglas de Negocio:**
+- verifican que solo se puede tener un pedido activo
+- verifican que el stock es suficiente antes de crear
+- verifican que el estado inicial es CREADO
+- verifican que el total se calcula bien
+
+**Integridad del Sistema:**
+- si falla alguna validacion no se crea el pedido
+- el stock no se modifica si el pedido falla
+- los datos quedan consistentes ante errores
+- las operaciones son transaccionales
+
+---
 
 ## Punto 12
 
 Las pruebas convierten las reglas de negocio en comprobaciones automáticas: unit tests validan la lógica, integration tests verifican efectos sobre datos (transacciones) y prueban el flujo completo; ejecutadas en CI detectan regresiones y preservan la integridad del sistema.
 
+---
+
 ## Punto 13
 
 Un pipeline CI/CD extrae el código, compila y corre pruebas unitarias, realiza analisis estático, empaqueta y ejecuta pruebas de integración, publica el artefacto y lo despliega para validar, y finalmente mueve lo revisado a produccion. El proposito es automatizar procesos para validar cosas de forma efectiva e individual
+
+---
 
 
 ## Punto 14
 
 Si una prueba falla en el pipeline, no se debe permitir el despliegue automaticamente: el fallo indica que alguna regla o comportamiento esperado esta roto y permitir el despligue aumenta el riesgo de introducir errores en producción. Lo correcto es detener el pipeline, notificar al equipo: corregir el problema, revertir el cambio o crear un hotfix antes de volver a intentar. 
+
+---
 
 ## Punto 15
 
