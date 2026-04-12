@@ -8,6 +8,7 @@ import lombok.Getter;
 @Schema(description = "Respuesta tras iniciar sesión")
 public class LoginResponse {
     @Schema(example = "usr_a1b2c3d4")
+    private String token;
     private String id;
     @Schema(example = "Juan Pérez")
     private String nombre;

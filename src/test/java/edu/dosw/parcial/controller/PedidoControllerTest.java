@@ -8,12 +8,18 @@ import edu.dosw.parcial.controller.dtos.response.CambiarEstadoResponse;
 import edu.dosw.parcial.controller.dtos.response.PedidoResponse;
 import edu.dosw.parcial.core.exceptions.DatosInvalidosException;
 import edu.dosw.parcial.core.exceptions.PedidoActivoException;
+import edu.dosw.parcial.core.services.PedidoService;
+import edu.dosw.parcial.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
@@ -23,11 +29,16 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(PedidoController.class)
-@AutoConfigureMockMvc(addFilters = false)
+@TestPropertySource(properties = {
+    "spring.security.jwt.secret=test-secret-key-for-testing-purposes-only",
+    "spring.security.jwt.expiration=86400000"
+})
 class PedidoControllerTest {
 
     @Autowired
@@ -38,6 +49,19 @@ class PedidoControllerTest {
 
     @MockBean
     private PedidoService pedidoService;
+
+    @MockBean
+    private JwtUtil jwtUtil;
+
+    private UsernamePasswordAuthenticationToken clienteAuth() {
+        return new UsernamePasswordAuthenticationToken("usr_001", null,
+                List.of(new SimpleGrantedAuthority("ROLE_CLIENTE")));
+    }
+
+    private UsernamePasswordAuthenticationToken cafeteriaAuth() {
+        return new UsernamePasswordAuthenticationToken("usr_001", null,
+                List.of(new SimpleGrantedAuthority("ROLE_CAFETERIA")));
+    }
 
     private CrearPedidoRequest crearRequest() {
         ItemPedidoRequest item = new ItemPedidoRequest();
@@ -57,7 +81,8 @@ class PedidoControllerTest {
         when(pedidoService.crearPedido(anyString(), any())).thenReturn(response);
 
         mockMvc.perform(post("/api/pedidos")
-                        .header("X-Usuario-Id", "usr_001")
+                        .with(authentication(clienteAuth()))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(crearRequest())))
                 .andExpect(status().isCreated())
@@ -71,7 +96,8 @@ class PedidoControllerTest {
                 .thenThrow(new PedidoActivoException("Tienes un pedido activo"));
 
         mockMvc.perform(post("/api/pedidos")
-                        .header("X-Usuario-Id", "usr_001")
+                        .with(authentication(clienteAuth()))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(crearRequest())))
                 .andExpect(status().isConflict())
@@ -90,8 +116,8 @@ class PedidoControllerTest {
         req.setEstado("EN_PREPARACION");
 
         mockMvc.perform(patch("/api/pedidos/ped_001")
-                        .header("X-Usuario-Id", "usr_001")
-                        .header("X-Usuario-Rol", "SEÑORA_CAFETERIA")
+                        .with(authentication(cafeteriaAuth()))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isOk())
@@ -107,8 +133,8 @@ class PedidoControllerTest {
         req.setEstado("CANCELADO");
 
         mockMvc.perform(patch("/api/pedidos/ped_001")
-                        .header("X-Usuario-Id", "usr_001")
-                        .header("X-Usuario-Rol", "CLIENTE")
+                        .with(authentication(clienteAuth()))
+                        .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(req)))
                 .andExpect(status().isBadRequest())

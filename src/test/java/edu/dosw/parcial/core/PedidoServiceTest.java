@@ -7,6 +7,7 @@ import edu.dosw.parcial.controller.dtos.response.CambiarEstadoResponse;
 import edu.dosw.parcial.controller.dtos.response.PedidoResponse;
 import edu.dosw.parcial.core.exceptions.DatosInvalidosException;
 import edu.dosw.parcial.core.exceptions.PedidoActivoException;
+import edu.dosw.parcial.core.services.PedidoService;
 import edu.dosw.parcial.core.services.StockService;
 import edu.dosw.parcial.persistence.entities.EstadoPedido;
 import edu.dosw.parcial.persistence.entities.ItemPedidoEntity;

@@ -6,6 +6,7 @@ import edu.dosw.parcial.controller.dtos.response.RegistroResponse;
 import edu.dosw.parcial.core.exceptions.CorreoYaExisteException;
 import edu.dosw.parcial.core.exceptions.DatosInvalidosException;
 import edu.dosw.parcial.core.services.UsuarioService;
+import edu.dosw.parcial.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -31,6 +32,9 @@ class UsuarioControllerTest {
 
     @MockBean
     private UsuarioService usuarioService;
+
+    @MockBean
+    private JwtUtil jwtUtil;
 
     private RegistroRequest request() {
         RegistroRequest r = new RegistroRequest();
