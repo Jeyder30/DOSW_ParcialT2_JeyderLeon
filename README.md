@@ -676,10 +676,18 @@ Si una prueba falla en el pipeline, no se debe permitir el despliegue automatica
 
 
 # Punto 16
-https://www.figma.com/design/xsyiJo8TwuhXrn9wFixKg0/Sin-t%C3%ADtulo?node-id=2-749&t=qWH4GCt3OmzxBbOH-1
+![Pantallazos del figma](docs/images/figma1.png)
+
+![Pantallazos del figma](docs/images/figma2.png)
+
+![Pantallazos del figma](docs/images/figma3.png)
+
+![Pantallazos del figma](docs/images/figma4.png)
+
+https://www.figma.com/design/aDDVSyUknrZHcjv1ebedmV/Sin-t%C3%ADtulo?node-id=0-1&p=f&t=swHOTp5xyZSiJtW3-0
 
 
 # PUNTOS GANADOS
-NICOLAS PARRADO 3
+NICOLAS PARRADO 3 
 JEYDER LEON 3
 
