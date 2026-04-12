@@ -687,6 +687,22 @@ Si una prueba falla en el pipeline, no se debe permitir el despliegue automatica
 https://www.figma.com/design/aDDVSyUknrZHcjv1ebedmV/Sin-t%C3%ADtulo?node-id=0-1&p=f&t=swHOTp5xyZSiJtW3-0
 
 
+## cobertura jacoco y sonar
+
+<img width="921" height="417" alt="image" src="https://github.com/user-attachments/assets/0e5c2e78-be12-4224-b081-c8fc808fd0d7" />
+
+
+<img width="921" height="446" alt="image" src="https://github.com/user-attachments/assets/fbd4ce2f-5cff-4908-bd8a-53db89a7bacc" />
+
+## video yoube pruebas apis postman
+
+
+https://youtu.be/PyQmUP90b28
+
+
+
+
+
 # PUNTOS GANADOS
 NICOLAS PARRADO 3 
 JEYDER LEON 3
