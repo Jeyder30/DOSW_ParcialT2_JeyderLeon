@@ -4,6 +4,7 @@ import edu.dosw.parcial.controller.dtos.request.CambiarEstadoRequest;
 import edu.dosw.parcial.controller.dtos.request.CrearPedidoRequest;
 import edu.dosw.parcial.controller.dtos.response.CambiarEstadoResponse;
 import edu.dosw.parcial.controller.dtos.response.PedidoResponse;
+import edu.dosw.parcial.core.services.PedidoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
